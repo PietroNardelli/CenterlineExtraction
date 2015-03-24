@@ -53,7 +53,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 
 		if ( nit.GetCenterPixel() == 1 )
 		{
-			for( int i = 0; i < nit.Size() && !IsBoundary; i++ )
+			for( unsigned int i = 0; i < nit.Size() && !IsBoundary; i++ )
 			{
 				if ( nit.GetPixel( i ) == 0 )
 				{
@@ -108,7 +108,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 		nit.SetLocation(p);
 
 		int in = 0;
-		for ( int i = 0; i < nit.Size(); i++ )
+		for ( unsigned int i = 0; i < nit.Size(); i++ )
 		{
 			if ( nit.GetPixel( i ) == 1 )
 				in++;
@@ -136,7 +136,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 
 			OutputIndexType q;
 
-			for( int i = 0; i < nit.Size(); i++ )
+			for( unsigned int i = 0; i < nit.Size(); i++ )
 			{
 				if ( nit.GetPixel( i ) == 1 )
 				{
@@ -165,7 +165,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 
 				nit.SetLocation( node.GetIndex() );
 
-				for( int i = 0; i < nit.Size(); i++ )
+				for( unsigned int i = 0; i < nit.Size(); i++ )
 				{
 					if( nit.GetPixel( i ) == 1 )
 					{
@@ -269,7 +269,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 			r = node.GetIndex();
 			nit.SetLocation( r );
 
-			for( int i = 0; i < nit.Size(); i++ )
+			for( unsigned int i = 0; i < nit.Size(); i++ )
 			{
 				if ( nit.GetPixel( i ) == 0 )
 				{
@@ -325,7 +325,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 			qnit.SetLocation( p );
 			qnit.SetCenterPixel( 1 );
 
-			for ( int i = 0; i < nit.Size(); i++ )
+			for ( unsigned int i = 0; i < nit.Size(); i++ )
 			{
 				if ( nit.GetPixel( i ) == 0 )
 				{
@@ -378,7 +378,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 				r = node.GetIndex();
 				nit.SetLocation( r );
 
-				for( int i = 0; i < nit.Size(); i++ )
+				for( unsigned int i = 0; i < nit.Size(); i++ )
 				{
 					if ( nit.GetPixel( i ) == 0 )
 					{
@@ -454,7 +454,7 @@ bool MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 
 		int n=0;
 
-		for( int i = 0; i < nit.Size(); i++ )
+		for( unsigned int i = 0; i < nit.Size(); i++ )
 		{
 			if ( nit.GetIndex() != nit.GetIndex( i ) && nit.GetPixel( i ) == 1 ) //Belonging to the object - 26* connected
 				n++;
@@ -623,7 +623,7 @@ void MedialCurveImageFilter<TInputImage, TAverageOutwardFluxPixelType, TOutputPi
 					// boundary condition a cero, al pedir por un pixel de fuera nos
 					// devuelve 0 y no haremos nada
 					// En queued por lo tanto tampoco escribiremos fuera de rango
-					for ( int i = 0; i < sknit.Size(); i++ )
+					for ( unsigned int i = 0; i < sknit.Size(); i++ )
 					{
 						if ( sknit.GetPixel( i ) == 1 )
 						{
