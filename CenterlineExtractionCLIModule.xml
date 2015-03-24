@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>Segmentation</category>
+  <title>CenterlineExtractionCLIModule</title>
+  <description><![CDATA[This is a CLI module that can be bundled in an extension]]></description>
+  <version>0.0.1</version>
+  <documentation-url>http://www.example.com/Slicer/Modules/CenterlineExtractionCLIModule</documentation-url>
+  <license>Slicer</license>
+  <contributor>Pietro Nardelli (University College Cork, UCC)</contributor>
+  <acknowledgements>This work was partially funded by NIH grant NXNNXXNNNNNN-NNXN</acknowledgements>
+  <parameters>
+    <image type="label">
+      <name>inputVolume</name>
+      <label>Input Volume</label>
+      <channel>input</channel>
+      <index>0</index>
+      <description><![CDATA[Input volume]]></description>
+    </image>
+    <image type="label">
+      <name>outputVolume</name>
+      <label>OutputVolume</label>
+      <channel>output</channel>
+      <index>1</index>
+      <description><![CDATA[Output Volume]]></description>
+    </image>
+  </parameters>
+  <parameters>
+    <label>Extraction Parameters</label>
+    <description><![CDATA[Parameters for medial curve extraction]]></description>
+    <double>
+      <name>sigma</name>
+      <longflag>--sigma</longflag>
+      <description><![CDATA[Sigma value for gaussian recursive filtering]]></description>
+      <label>Sigma</label>
+      <default>0.2</default>
+      <constraints>
+        <minimum>0.0</minimum>
+        <maximum>50</maximum>
+        <step>0.1</step>
+      </constraints>
+    </double>
+    <integer>
+      <name>threshold</name>
+      <longflag>--threshold</longflag>
+      <description><![CDATA[Threshold value at which end points are preserved in the extraction of the medial curve]]></description>
+      <label>Threshold</label>
+      <default>0</default>
+      <constraints>
+        <minimum>0</minimum>
+        <maximum>500</maximum>
+        <step>1</step>
+      </constraints>
+    </integer>
+  </parameters>
+</executable>
