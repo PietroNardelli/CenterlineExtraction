@@ -1,0 +1,78 @@
+cmake_minimum_required(VERSION 2.8)
+project( CenterlineExtractionCLIModule)
+#-----------------------------------------------------------------------------
+#set(MODULE_NAME CenterlineExtractionCLIModule)
+
+#-----------------------------------------------------------------------------
+
+#
+# SlicerExecutionModel
+#
+if (Slicer_SOURCE_DIR)
+    if(Slicer_BINARY_DIR)
+    else(Slicer_BINARY_DIR)
+        # Slicer_BINARY_DIR only exists for Slicer 4. This flag is only used for Slicer3 builds:
+        SET_SOURCE_FILES_PROPERTIES(${PROJECT_NAME}.cxx COMPILE_FLAGS -DTHISISASLICERBUILD=1)
+    endif(Slicer_BINARY_DIR)
+else( Slicer_SOURCE_DIR )
+    ADD_SUBDIRECTORY(SlicerExecutionModel)
+endif (Slicer_SOURCE_DIR)
+
+if(NOT ITK_FOUND)
+    find_package(ITK REQUIRED)
+    include(${ITK_USE_FILE})
+endif(NOT ITK_FOUND)
+
+if(Slicer_BINARY_DIR) # This variable exits only for Slicer4
+
+    slicerMacroBuildCLI(
+       NAME ${PROJECT_NAME}
+       LOGO_HEADER ${PROJECT_SOURCE_DIR}/ModuleLogo.h
+       TARGET_LIBRARIES ${ITK_LIBRARIES} ModuleDescriptionParser
+       LINK_DIRECTORIES ${ModuleDescriptionParser_BINARY_DIR}
+       INCLUDE_DIRECTORIES ${SlicerBaseCLI_SOURCE_DIR} ${Slicer_SOURCE_DIR}/Applications/CLI/DiffusionApplications/DiffusionApplicationsCommon
+       ${SlicerBaseCLI_BINARY_DIR}
+    )
+    # This is necessary to tell the main .cxx what kind of build we are using:
+    SET_SOURCE_FILES_PROPERTIES(${PROJECT_NAME}.cxx COMPILE_FLAGS -DSLICERV4=1)
+endif(Slicer_BINARY_DIR)
+
+find_package(SlicerExecutionModel REQUIRED)
+include(${SlicerExecutionModel_USE_FILE})
+
+#
+# ITK
+#
+set(${PROJECT_NAME}_ITK_COMPONENTS
+  ITKIOImageBase
+  ITKSmoothing
+  )
+find_package(ITK 4.6 COMPONENTS ${${PROJECT_NAME}_ITK_COMPONENTS} REQUIRED)
+set(ITK_NO_IO_FACTORY_REGISTER_MANAGER 1) # See Libs/ITKFactoryRegistration/CMakeLists.txt
+include(${ITK_USE_FILE})
+
+#ADD_SUBDIRECTORY(CLI)
+
+#-----------------------------------------------------------------------------
+set(MODULE_INCLUDE_DIRECTORIES
+  )
+
+set(MODULE_SRCS
+  )
+
+set(MODULE_TARGET_LIBRARIES
+  ${ITK_LIBRARIES}
+  )
+
+#-----------------------------------------------------------------------------
+SEMMacroBuildCLI(
+  NAME ${MODULE_NAME}
+  TARGET_LIBRARIES ${MODULE_TARGET_LIBRARIES}
+  INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
+  ADDITIONAL_SRCS ${MODULE_SRCS}
+  )
+
+#-----------------------------------------------------------------------------
+if(BUILD_TESTING)
+  add_subdirectory(Testing)
+endif()
